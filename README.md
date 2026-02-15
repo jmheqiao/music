@@ -1,136 +1,33 @@
-# 🎶 Solara（光域）
+# 🎶 Solara (Enhanced Version)
 
-> 🌐 由 Node.js + SQLite 后端服务支撑的现代化网页音乐播放器，整合多种音乐聚合接口，覆盖搜索、播放与音频下载全流程。
+> [!NOTE]
+> 本项目是在原版基础上进行的安全性增强版本，主要解决了公网部署的访问控制问题。
 
-![Review-ezgif com-optimize](https://github.com/user-attachments/assets/487157de-bf71-4bc9-9e49-16a4f0a14472)
-| | | |
-|:--:|:--:|:--:|
-| <img src="https://github.com/user-attachments/assets/7fcfd485-bcd4-46f9-887a-0a972dce3be3" height="700"/> | <img src="https://github.com/user-attachments/assets/bb092569-0a7f-47f6-b7e9-c07ea56949cf" height="700"/> | <img src="https://github.com/user-attachments/assets/02b830e3-292f-4880-91f2-86ec818b877a" height="700"/> |
+## 📢 项目说明 & 致谢 (Acknowledgement)
 
+本项目 Fork 自 **[leaosunday/Solara](https://github.com/leaosunday/Solara)**。
 
-## 🤝 参与贡献
-感谢 GD音乐台(music.gdstudio.xyz)提供的免费API
+这款优秀的音乐播放器凝聚了多位开发者的心血，在此表示由衷的感谢：
+* **最原始作者**：感谢 **[akudamatata/Solara](https://github.com/akudamatata/Solara)** 创造了如此纯净的播放器基础。
+* **二次开发**：感谢 **[leaosunday/Solara](https://github.com/leaosunday/Solara)** 进行了后续的深度维护与功能优化。
 
-感谢 来自Linux.do 牛就是牛@ufoo 大佬 https://linux.do/t/topic/942415 提供的灵感
+### 🛠 本版改动
+* **安全性增强**：在保留原版全部特性的基础上，仅增加了 **登录口令 (Password Authentication)**。
+* **支持原作者**：强烈建议大家前往原项目地址给予支持，点击 **Star** 🌟：[akudamatata/Solara](https://github.com/akudamatata/Solara) & [leaosunday/Solara](https://github.com/leaosunday/Solara)。
 
-## ⬆️ 优化点
-- 支持下载到nas，原版只支持下载到本地
-- 下载的歌曲文件自动嵌入歌词和封面（免刮削），支持mp4/flac，其他格式未测试。绿联音乐已测试支持，某些播放器如QQ音乐、网易云不支持(实测music-tag-web也不行)。
-- 免登录去掉了单密码登录功能（可能以后加入多用户登录？）
-- 优化版solara将cloudflare d1换成了sqlite3，加入了node后端方便本地部署
-- 探索雷达支持歌曲列表预览后再添加到播放列表
-- 搜索结果增加全选按钮
-- 播放列表/收藏列表新添加的歌曲默认置顶（原版置底）
-- 支持批量下载/批量下载到nas
-- 支持搜索歌单
+---
 
+## 🚀 快速开始 (Quick Start)
 
-## 🌟 主要特性
+### 1. 拉取镜像 (Docker Pull)
+docker pull shaw2025/solara:latest
+## 2. 配置说明 (Configuration)
 
-- 🎨 主题美学：内置亮/暗模式与玻璃拟态界面，根据当前曲目封面自动取色渲染沉浸式背景，具备沉浸体验。
-- 📱  竖屏移动端：全新竖屏布局匹配移动端手势与屏幕比例，按钮、列表与歌词均针对单手操作优化。
-- 🔍 跨站曲库检索：一键切换数据源，支持分页浏览并批量导入播放队列。
-- 📻 队列管理灵活：新增、删除、清空操作即时生效，并自动持久化到本地 SQLite 数据库或浏览器 localStorage。
-- ❤️ 收藏列表：搜索结果与播放列表均可一键收藏，收藏列表拥有独立的播放进度、播放模式与批量操作面板。
-- 🔁 丰富的播放模式：列表循环、单曲循环与随机播放随手切换，记忆上次偏好。
-- 📝 动态歌词视图：逐行滚动高亮，当前行自动聚焦，手动滚动后短暂锁定视图。
-- 🔄 列表导入导出：支持播放队列与收藏列表统一导入/导出，可一键迁移或恢复收藏歌曲并同步到播放队列。
-- 📥 多码率下载：可挑选 128K / 192K / 320K / FLAC 等品质并直接获取音频文件。
-- ☁️ Node.js 后端：统一聚合各数据源并处理音频跨域，使用 SQLite 持久化存储。
-- 🔒 锁屏播放控制：锁屏界面自动显示专辑封面与播放控件，无需解锁即可进行播放控制。
-- 🛠️ 调试控制台：按下 Ctrl + D 呼出实时日志面板，便于排查接口或交互异常。
+本项目通过环境变量进行快速配置，请在部署时根据需要调整：
 
-## 🚀 快速上手
+| 环境变量 (ENV) | 默认值 (Default) | 描述 (Description) |
+| :--- | :--- | :--- |
+| **`PASSWORD`** | `123456` | **必填/建议修改**：进入播放器页面所需的登录口令 |
 
-本项目现在支持在任何支持 Node.js 的环境下运行。
-
-### 1. 克隆仓库
-```bash
-git clone https://github.com/your-username/Solara.git
-cd Solara
-```
-
-### 2. 安装依赖
-```bash
-npm install
-```
-
-### 3. 配置（可选）
-在根目录创建 `.env` 文件：
-```env
-PORT=3000
-DB_PATH=solara.db
-NAS_DOWNLOAD_DIR=downloads
-```
-
-### 4. Docker 部署 (推荐)
-支持多阶段构建，镜像精简高效。
-
-```bash
-# 启动服务
-docker-compose up -d
-```
-
-### 5. 直接启动
-```bash
-# 直接启动
-npm start
-
-# 开发模式（自动重载）
-npm run dev
-```
-
-启动后访问 `http://localhost:3000` 即可。
-
-## ⚙️ 配置提示
-- 默认主题、播放模式等偏好可在 `state` 初始化逻辑中按需调整。
-- 数据库会自动创建在 `solara.db`，在 Docker 部署时会自动挂载到 `./data` 目录进行持久化。
-
-## 🧭 探索雷达
-- 探索雷达会在「流行、摇滚、古典音乐、民谣、电子、爵士、说唱、乡村、蓝调、R&B、金属、嘻哈、轻音乐」等分类中随机挑选关键词，自动为播放列表补充新歌。
-- 如果想排除某些不喜欢的分类，可在 `js/index.js` 中的 `EXPLORE_RADAR_GENRES` 数组里删除对应条目或新增自己喜欢的分类，保存后重新部署即可生效。
-
-## 🎵 使用流程
-1. 输入关键词并选择想要的曲库后发起搜索。
-2. 在结果列表中可试听、播放、下载或加入播放队列。
-3. 点击列表中的心形图标即可收藏歌曲，收藏列表支持快捷下载、添加至播放列表或批量清空。
-4. 右侧播放/收藏列表展示当前曲目，可拖动播放、移除或一键清空。
-5. 底部控制栏提供播放控制、播放模式切换、进度条与音量滑块。
-6. 打开歌词面板即可查看实时滚动的高亮歌词。
-
-## 📱 移动端体验提示
-- 将网页添加到手机主屏或通过移动浏览器访问，即可自动切换至竖屏布局；
-- 底栏控件重新排布，保证竖向滑动不遮挡核心信息；
-- 点击封面可以切换到歌词面板，可通过点击展开/收起。
-
-## ❓ 常见问题解答
-- **搜索没有结果怎么办？** 检查服务器控制台日志，如接口被阻挡可尝试切换数据源，很有可能是免费API炸了。
-- **如何重置本地数据？** 删除根目录下的 `solara.db` 文件，或在浏览器中清理 `localStorage`。
-- **收藏或播放列表如何备份？** 使用播放队列或收藏列表顶部的「导出」按钮生成 JSON 文件，日后可通过对应列表的「导入」按钮恢复。
-
-## 🗂️ 项目结构
-```
-Music-Player/
-├── css/
-│   ├── desktop.css   # 桌面端布局与组件样式
-│   ├── mobile.css    # 移动端适配样式
-│   └── style.css     # 公共主题与变量定义
-├── js/
-│   ├── index.js       # 播放器核心逻辑、状态管理与探索雷达分类
-│   └── mobile.js      # 移动端交互与事件处理
-├── lib/
-│   ├── jpeg-decoder.js # JPEG 解码逻辑 (调色板取色支持)
-│   └── palette.js      # 封面颜色分析与调色板生成算法
-├── server.js          # Node.js + Express 服务端 (SQLite, Proxy)
-├── package.json       # 项目依赖与脚本
-├── Dockerfile         # Docker 镜像构建配置 (多阶段构建)
-├── docker-compose.yml # Docker Compose 部署配置
-├── solara.db          # SQLite 数据库 (启动后自动生成)
-├── favicon.png
-├── favicon.svg
-├── index.html         # 主界面结构、资源引入与配置项
-└── README.md          # 项目说明
-```
-
-## 📄 许可证
-本项目采用 CC BY-NC-SA 协议，禁止任何商业化行为，任何衍生项目必须保留本项目地址并以相同协议开源。
+> [!IMPORTANT]
+> **安全建议**：为了保障您的服务安全，部署时请务必通过 `-e PASSWORD=你的口令` 修改默认值，避免使用初始密码 `123456`。
