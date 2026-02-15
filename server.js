@@ -13,6 +13,9 @@ const mm = require('music-metadata');
 const { buildPalette } = require('./lib/palette');
 require('dotenv').config();
 
+// --- 新增：登录口令定义 ---
+const PASSWORD = process.env.PASSWORD || "123456";
+
 const app = express();
 const port = process.env.PORT || 3000;
 const dbPath = process.env.DB_PATH || 'solara.db';
@@ -41,6 +44,9 @@ db.exec(`
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+
+// --- 新增：允许后端解析前端发来的 JSON 数据 ---
+app.use(express.json());
 
 // 静态文件服务
 app.use(express.static(path.join(__dirname)));
@@ -449,6 +455,16 @@ app.post('/api/download', async (req, res) => {
             try { fs.unlinkSync(tempFilePath); } catch(e) {}
         }
         res.status(500).json({ error: 'Failed to process download' });
+    }
+});
+
+// --- 新增：登录验证接口 ---
+app.post('/api/login', (req, res) => {
+    const { password } = req.body;
+    if (password === PASSWORD) {
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ success: false, message: "口令错误" });
     }
 });
 
